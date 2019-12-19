@@ -1,0 +1,83 @@
+.warrp {
+  // padding: 10px;
+  // border: 1px solid rgba(84, 92, 100, 0.3);
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+
+  .search_box {
+    background: #fff;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .search {
+      flex: .9;
+
+      .no_margin {
+        margin-bottom: 8px !important;
+      }
+    }
+
+    .created {
+      flex: .1;
+      display: flex;
+      justify-content: center;
+    }
+
+  }
+
+  .warrp_content {
+    padding: 10px;
+    background: #fff;
+    border-radius: 0 0 8px 8px;
+    flex: 1;
+
+
+
+  }
+}
+
+.drawer_warrp {
+  width: 90%;
+  margin: auto;
+}
+
+// 修改时的输入框margin
+.no_margin {
+  margin-bottom: 10px !important;
+}
+
+.between_box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+/*滚动条样式*/
+.warrp::-webkit-scrollbar {
+  /*滚动条整体样式*/
+  width: 4px;
+  /*高宽分别对应横竖滚动条的尺寸*/
+  height: 4px;
+}
+
+.warrp::-webkit-scrollbar-thumb {
+  /*滚动条里面小方块*/
+  border-radius: 8px;
+  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.warrp::-webkit-scrollbar-track {
+  /*滚动条里面轨道*/
+  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  border-radius: 0;
+  background: rgba(0, 0, 0, 0.1);
+}
