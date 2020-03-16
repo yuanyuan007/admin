@@ -4,14 +4,7 @@ import Vue from 'vue';
 import router from '../router';
 import { Message } from 'element-ui';
 // 请求拦截器
-const animateUrl = ['TestController/findName', 'customer/insertCustomer', 'customer/updateCustomer'] // 需要添加加载动画的数组
-Axios.defaults.withCredentials = true;
 Axios.interceptors.request.use((config) => {
-  animateUrl.forEach(item => {
-    if(config.url.match(item)) {
-      Vue.prototype.$ingAnimate.open();
-    }
-  })
   return config;
 }, (error) => {
   console.log(error);
@@ -19,24 +12,15 @@ Axios.interceptors.request.use((config) => {
 
 // 响应拦截器
 Axios.interceptors.response.use((config) => {
-
   if(config.status === 200 && config.data.result.errcode === "0000") {
-    animateUrl.forEach(item => {
-      if(config.config.url.match(item)) {
-        Vue.prototype.$ingAnimate.close();
-      }
-    })
+
     return config.data.result.data;
   } else {
     return checkoutStatus(config);
   }
 
 }, (error => {
-  animateUrl.forEach(item => {
-    if(config.config.url.match(item)) {
-      Vue.prototype.$ingAnimate.close();
-    }
-  })
+
   Message.error('服务不稳定，请稍后再试');
   return Promise.reject(error);
 }))
@@ -45,26 +29,26 @@ function checkoutStatus(config) {
 
   switch(config.data.result.errcode) {
     case '800002':
-      Message.error('请重新登录');
+      if(store.state.login.flag) {
+        Message.error('请重新登录');
+        store.commit('login/setFlag', false)
+      }
+      setTimeout(() => {
+        store.commit('login/setFlag', true);
+      }, 2000)
       router.push('/');
       break;
-    case '0021':
-      return { code: '0021', msg: '客户余额不足,请确认是否下单' };
-    case '0022':
-      return { code: '0022', msg: '客户信用额度不足,请确认是否下单' };
-    case '0032':
-      return { code: '0032', msg: '客户余额不足,请确认是否更新订单' }
-    case '0033':
-      return { code: '0033', msg: '客户信用额度不足，请确认是否更新订单' }
     default:
-      Message.error(config.data.message.split('|')[1]);
+      if(store.state.login.flag) {
+        Message.error(config.data.message);
+        store.commit('login/setFlag', false)
+      }
+      setTimeout(() => {
+        store.commit('login/setFlag', true);
+      }, 1000)
       break;
   }
-  animateUrl.forEach(item => {
-    if(config.config.url.match(item)) {
-      Vue.prototype.$ingAnimate.close();
-    }
-  })
+
   return false;
 }
 
@@ -76,6 +60,12 @@ let header = {
 
 };
 function setParameter(url, data) {
+  let formData = new FormData();
+  if(url.form) {
+    Object.keys(data).forEach(item => {
+      formData.append(item, data[item]);
+    })
+  }
   var methods = url.method === 'get' ? 'params' : 'data';
   return {
     url: url.url,
@@ -87,17 +77,30 @@ function setParameter(url, data) {
     },
     [methods]: data ? data : {},
     timeout: 50000,
+    withCredentials: true
   }
 }
 
 function http(url, data) {
+
+
+  if(url.loding) {
+    Vue.prototype.$ingAnimate.open();
+  }
+
   return new Promise((resolve, reject) => {
     let res_ = setParameter(url, data);
     Axios(res_).then(res => {
       if(res !== false) {
         resolve(res);
+        if(url.loding) {
+          Vue.prototype.$ingAnimate.close();
+        }
       } else {
         reject(res);
+        if(url.loding) {
+          Vue.prototype.$ingAnimate.close();
+        }
       }
     }).catch(ret => {
       reject(ret);

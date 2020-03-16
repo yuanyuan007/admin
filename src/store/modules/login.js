@@ -1,6 +1,7 @@
 import { getSen, setSen } from 'utils'
 import Vue from 'vue'
 const state = {
+  flag: true,
 
 }
 
@@ -9,7 +10,9 @@ const getters = {
 }
 
 const mutations = {
-
+  setFlag(state, data) {
+    state.flag = data;
+  },
 }
 const actions = {}
 

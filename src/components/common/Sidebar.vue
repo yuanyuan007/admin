@@ -51,44 +51,54 @@ export default {
         },
         {
           icon: 'el-icon-user-solid',
-          title: '交易查询',
+          title: '公司信息',
           index: '1',
         },
         {
-          icon: 'el-icon-s-custom',
-          title: '报表统计',
-          index: '2',
-          subs: [
-            {
-              title: '应用渠道日结',
-              index: '/customerManagement',
-            },
-            {
-              title: '全系统日结',
-              index: '/purchasingCustomers',
-            }
-          ]
+          icon: 'el-icon-user-solid',
+          title: '产品配置',
+          index: '1',
         },
         {
           icon: 'el-icon-truck',
-          title: '用户管理',
+          title: '账单管理',
           index: '6',
           subs: [
             {
-              title: '员工管理',
+              title: '预约账单',
               index: '/vehicle',
 
             },
             {
-              title: '角色管理',
+              title: '现场账单',
               index: '/selectInAndOut',
 
             }
           ]
         },
         {
+          icon: 'el-icon-s-custom',
+          title: '权限管理',
+          index: '2',
+          subs: [
+            {
+              title: '员工管理',
+              index: '/vehicle',
+            },
+            {
+              title: '角色管理',
+              index: '/selectInAndOut',
+            }
+          ]
+        },
+        {
           icon: 'el-icon-bank-card',
-          title: '系统配置',
+          title: '退款管理',
+          index: '3'
+        },
+        {
+          icon: 'el-icon-bank-card',
+          title: '缴费记录',
           index: '3'
         }
       ]
