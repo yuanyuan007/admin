@@ -93,7 +93,7 @@ export default {
         },
         {
           icon: 'el-icon-bank-card',
-          title: '退款管理',
+          title: '缴费管理',
           index: '3'
         },
         {
